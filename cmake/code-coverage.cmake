@@ -395,6 +395,9 @@ function(target_code_coverage TARGET_NAME)
           DEPENDS ccov-preprocessing ${TARGET_NAME})
 
         # Generate exclusion string for use
+        if(NOT EXCLUDE_REGEX)
+          set(EXCLUDE_REGEX "")
+        endif()
         foreach(EXCLUDE_ITEM ${target_code_coverage_EXCLUDE})
           set(EXCLUDE_REGEX ${EXCLUDE_REGEX} --remove ${COVERAGE_INFO}
                             '${EXCLUDE_ITEM}')

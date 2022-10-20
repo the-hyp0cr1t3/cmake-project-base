@@ -14,6 +14,6 @@ namespace MyLib {
  */
 int func(int x, int y = 0);
 
-} // namespace MyLib
+}  // namespace MyLib
 
 #endif /* MY_LIB_H */

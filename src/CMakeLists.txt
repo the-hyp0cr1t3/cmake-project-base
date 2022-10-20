@@ -14,8 +14,8 @@ target_link_libraries(MyProj_app MyProj::mylib)
 # =============================
 add_test(NAME MyProj.app.NoArgs COMMAND MyProj_app)
 add_test(NAME MyProj.app.WithArgs COMMAND MyProj_app 42 17)
-set_tests_properties(MyProj.app.NoArgs PROPERTIES LABELS MyProjApp)
-set_tests_properties(MyProj.app.WithArgs PROPERTIES LABELS MyProjApp)
+set_tests_properties(MyProj.app.NoArgs PROPERTIES LABELS MyProj.App)
+set_tests_properties(MyProj.app.WithArgs PROPERTIES LABELS MyProj.App)
 
 
 # =============================

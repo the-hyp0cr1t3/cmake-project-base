@@ -21,7 +21,9 @@ target_include_directories(MyProj_mylib
 # =============================
 # Testing
 # =============================
-add_subdirectory(tests)
+if(BUILD_TESTING)
+  add_subdirectory(tests)
+endif()
 
 
 # =============================

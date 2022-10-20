@@ -72,11 +72,6 @@ if(NOT CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
       ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
 endif()
 
-# Turn on test related commands; otherwise ignore all of them.
-if(BUILD_TESTING)
-  enable_testing()
-endif()
-
 # Fetch externally provided content
 add_subdirectory(deps)
 
@@ -85,12 +80,18 @@ add_subdirectory(src)
 
 # Add install and uninstall targets
 if(NOT CMAKE_SKIP_INSTALL_RULES)
-  include(install-script)
-  include(uninstall-script)
+  include(install-targets)
+  include(uninstall-targets)
+endif()
+
+# Add targets format-check and format-fix for developers
+if(MyProj_DEVELOPER_MODE)
+  include(lint-targets)
 endif()
 
 
 if(PROJECT_IS_TOP_LEVEL)
+  include(CTest)
   if(BUILD_TESTING)
     add_subdirectory(tests)
   endif()

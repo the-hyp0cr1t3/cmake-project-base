@@ -12,14 +12,6 @@
       "binaryDir": "${sourceDir}/build"
     },
     {
-      "name": "ci-std",
-      "description": "This preset makes sure the project actually builds with at least the specified standard",
-      "hidden": true,
-      "cacheVariables": {
-        "CMAKE_CXX_STANDARD": "17",
-      }
-    },
-    {
       "name": "flags-unix",
       "hidden": true,
       "cacheVariables": {
@@ -37,13 +29,13 @@
     {
       "name": "ci-unix",
       "hidden": true,
-      "inherits": ["flags-unix", "ci-std"],
+      "inherits": ["flags-unix" ],
       "generator": "Unix Makefiles"
     },
     {
       "name": "ci-win64",
       "hidden": true,
-      "inherits": ["flags-windows", "ci-std"],
+      "inherits": ["flags-windows" ],
       "generator": "Visual Studio 17 2022",
       "architecture": "x64"
     },

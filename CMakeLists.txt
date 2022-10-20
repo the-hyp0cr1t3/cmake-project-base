@@ -78,7 +78,12 @@ if(NOT CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
 endif()
 
 # Fetch externally provided content
-add_subdirectory(deps)
+include(deps)
+
+# Turn on test related commands; otherwise disable all of them.
+if(BUILD_TESTING)
+  enable_testing()
+endif()
 
 # Build project targets
 add_subdirectory(src)
@@ -96,8 +101,8 @@ endif()
 
 
 if(PROJECT_IS_TOP_LEVEL)
-  include(CTest)
   if(BUILD_TESTING)
+    include(CTest)
     add_subdirectory(tests)
   endif()
 

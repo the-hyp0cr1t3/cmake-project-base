@@ -24,6 +24,11 @@ endif()
 option(BUILD_TESTING "Create tests using CMake" ${MyProj_DEVELOPER_MODE})
 option(BUILD_MCSS_DOCS "Build documentation using Doxygen and m.css" ${MyProj_DEVELOPER_MODE})
 option(BUILD_SHARED_LIBS "Build libraries as shared as opposed to static" OFF)
+option(
+  ENABLE_COVERAGE
+  "Build targets with code coverage instrumentation (requires GCC or Clang)"
+  ${MyProj_DEVELOPER_MODE})
+
 
 # Make project cmake scripts findable
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)

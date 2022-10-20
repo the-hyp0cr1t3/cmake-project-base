@@ -11,3 +11,8 @@ gtest_discover_tests(MyProj_mylib_tests
     LABELS MyProj.Lib
   # WORKING_DIRECTORY ""
 )
+
+FetchContent_GetProperties(gtest SOURCE_DIR gtest_SOURCE_DIR)
+
+include(code-coverage)
+target_code_coverage(MyProj_mylib_tests AUTO EXCLUDE ${gtest_SOURCE_DIR}/*)

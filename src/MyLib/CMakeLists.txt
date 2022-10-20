@@ -1,3 +1,5 @@
+include(code-coverage)
+
 # =============================
 # Define targets
 # =============================
@@ -16,6 +18,8 @@ target_sources(MyProj_mylib
 target_include_directories(MyProj_mylib
   PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include/MyLib>"
          "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
+
+target_code_coverage(MyProj_mylib AUTO)
 
 
 # =============================

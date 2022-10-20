@@ -15,10 +15,6 @@ set(FORMAT_PATTERNS
     CACHE STRING
           "; separated patterns relative to the project source dir to format")
 
-file(GLOB_RECURSE glob_files ${FORMAT_PATTERNS})
-message(STATUS "Format patterns: " ${FORMAT_PATTERNS})
-message(STATUS "Globbed source files: " ${glob_files})
-
 set(FORMAT_COMMAND clang-format CACHE STRING "Formatter to use")
 
 add_custom_target(

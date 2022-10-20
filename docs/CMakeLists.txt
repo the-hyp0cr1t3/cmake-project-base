@@ -9,8 +9,6 @@ foreach(file IN ITEMS Doxyfile conf.py)
   configure_file("${file}.in" "${CMAKE_CURRENT_BINARY_DIR}/${file}" @ONLY)
 endforeach()
 
-# FetchContent_GetProperties(mcss SOURCE_DIR mcss_SOURCE_DIR)
-
 set(config "${CMAKE_CURRENT_BINARY_DIR}/conf.py")
 set(mcss_script "${mcss_SOURCE_DIR}/documentation/doxygen.py")
 

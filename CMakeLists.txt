@@ -1,0 +1,113 @@
+cmake_minimum_required(VERSION 3.23)
+
+include(cmake/prelude.cmake)
+
+project(
+  MyProj
+  VERSION 0.0.0.0
+  DESCRIPTION ""
+  HOMEPAGE_URL "https://github.com/the-hyp0cr1t3/cmake-project-base"
+  LANGUAGES CXX)
+
+# ----- Project wide setup -----
+
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
+
+# Encourage user to specify a build type (e.g. Release, Debug, etc.), otherwise
+# set it to Release.
+if(NOT CMAKE_CONFIGURATION_TYPES)
+  if(NOT CMAKE_BUILD_TYPE)
+    message(STATUS "Setting build type to 'Release' as none were specified.")
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY VALUE "Release")
+  endif()
+endif()
+
+if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
+      ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
+  message(STATUS "Runtime: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+endif()
+if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY
+      ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+  message(STATUS "Library: ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
+endif()
+if(NOT CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY
+      ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+  message(STATUS "Archive: ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
+endif()
+
+# To build shared libraries in Windows, we set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS
+# to TRUE. See
+# https://cmake.org/cmake/help/v3.4/variable/CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS.html
+# See
+# https://blog.kitware.com/create-dlls-on-windows-without-declspec-using-new-cmake-export-all-feature/
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
+# Under MSVC, we set CMAKE_DEBUG_POSTFIX to "d" to add a trailing "d" to library
+# built in debug mode. In this Windows user can compile, build and install the
+# library in both Release and Debug configuration avoiding naming clashes in the
+# installation directories.
+if(MSVC)
+  set(CMAKE_DEBUG_POSTFIX "d")
+endif()
+
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED YES)
+set(CMAKE_CXX_EXTENSIONS NO)
+
+# set(CMAKE_CXX_FLAGS_DEBUG "-g")
+# set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
+# Enable RPATH support for installed binaries and libraries
+include(AddInstallRPATHSupport)
+add_install_rpath_support(
+  BIN_DIRS
+    "${CMAKE_INSTALL_FULL_BINDIR}"
+  LIB_DIRS
+    "${CMAKE_INSTALL_FULL_LIBDIR}"
+  INSTALL_NAME_DIR
+    "${CMAKE_INSTALL_FULL_LIBDIR}"
+  USE_LINK_PATH)
+
+option(BUILD_MCSS_DOCS "Build documentation using Doxygen and m.css" OFF)
+option(BUILD_SHARED_LIBS "Build libraries as shared as opposed to static" OFF)
+option(BUILD_TESTING "Create tests using CMake" OFF)
+if(BUILD_TESTING)
+  enable_testing()
+endif()
+
+# Externally provided content
+add_subdirectory(dependencies)
+
+# Main targets built by this project
+add_subdirectory(src)
+
+if(NOT CMAKE_SKIP_INSTALL_RULES)
+  include(InstallBasicPackageFiles)
+  install_basic_package_files(MyProj
+                              VERSION ${MyProj_VERSION}
+                              COMPATIBILITY AnyNewerVersion
+                              EXPORT MyProj_Runtime
+                              VARS_PREFIX MyProj    # what's this?
+                              NAMESPACE MyProj::
+                              NO_SET_AND_CHECK_MACRO
+                              NO_CHECK_REQUIRED_COMPONENTS_MACRO)
+  include(uninstall-target)
+endif()
+
+
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+  if(BUILD_TESTING)
+    add_subdirectory(tests)
+  endif()
+
+  if(BUILD_MCSS_DOCS)
+    add_subdirectory(doc)
+  endif()
+
+  add_subdirectory(packaging)
+endif()

@@ -16,6 +16,11 @@ project(
   HOMEPAGE_URL "https://github.com/the-hyp0cr1t3/cmake-project-base"
   LANGUAGES CXX)
 
+option(BUILD_TESTING "Create tests using CMake" OFF)
+option(BUILD_MCSS_DOCS "Build documentation using Doxygen and m.css" OFF)
+option(BUILD_SHARED_LIBS "Build libraries as shared as opposed to static" OFF)
+
+
 # ----- Project wide setup -----
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
@@ -66,20 +71,6 @@ set(CMAKE_CXX_EXTENSIONS NO)
 # set(CMAKE_CXX_FLAGS_DEBUG "-g")
 # set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
-# Enable RPATH support for installed binaries and libraries
-include(AddInstallRPATHSupport)
-add_install_rpath_support(
-  BIN_DIRS
-    "${CMAKE_INSTALL_FULL_BINDIR}"
-  LIB_DIRS
-    "${CMAKE_INSTALL_FULL_LIBDIR}"
-  INSTALL_NAME_DIR
-    "${CMAKE_INSTALL_FULL_LIBDIR}"
-  USE_LINK_PATH)
-
-option(BUILD_MCSS_DOCS "Build documentation using Doxygen and m.css" OFF)
-option(BUILD_SHARED_LIBS "Build libraries as shared as opposed to static" OFF)
-option(BUILD_TESTING "Create tests using CMake" OFF)
 if(BUILD_TESTING)
   enable_testing()
 endif()
@@ -90,17 +81,9 @@ add_subdirectory(dependencies)
 # Main targets built by this project
 add_subdirectory(src)
 
+
 if(NOT CMAKE_SKIP_INSTALL_RULES)
-  include(InstallBasicPackageFiles)
-  install_basic_package_files(MyProj
-                              VERSION ${MyProj_VERSION}
-                              COMPATIBILITY AnyNewerVersion
-                              EXPORT MyProj_Runtime
-                              VARS_PREFIX MyProj    # what's this?
-                              NAMESPACE MyProj::
-                              NO_SET_AND_CHECK_MACRO
-                              NO_CHECK_REQUIRED_COMPONENTS_MACRO)
-  include(uninstall-target)
+  include(install-script)
 endif()
 
 

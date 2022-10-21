@@ -11,7 +11,7 @@ set(install_manifest ${CMAKE_CURRENT_BINARY_DIR}/install_manifest.txt)
 
 file(WRITE ${cmake_uninstall_file} [[
 if(NOT EXISTS "]] ${install_manifest} [[")
-    message(WARNING "Cannot find \"]] ${install_manifest} [[\"")
+    message(FATAL_ERROR "Cannot find \"]] ${install_manifest} [[\"")
     return()
 endif()
 

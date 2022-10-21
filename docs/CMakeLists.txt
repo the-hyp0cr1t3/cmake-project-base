@@ -25,4 +25,4 @@ add_custom_target(
 # where the GNUInstallDirs module is first included.
 set(CMAKE_INSTALL_DOCDIR ${CMAKE_INSTALL_DATAROOTDIR}/doc/MyProj)
 install(DIRECTORY ${DOXYGEN_OUTPUT_DIRECTORY}/html
-        DESTINATION ${CMAKE_INSTALL_DOCDIR})
+        DESTINATION ${CMAKE_INSTALL_DOCDIR} COMPONENT MyProj_docs)

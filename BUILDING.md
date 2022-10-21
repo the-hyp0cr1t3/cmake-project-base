@@ -75,5 +75,10 @@ cmake --install build --config Release
 
 To install to a location other than the standard one:
 ```sh
-cmake --install build --prefix "foo/bar/baz"
+cmake --install build --prefix "/foo/bar/baz"
+```
+
+To uninstall:
+```sh
+cmake --build build --target uninstall
 ```

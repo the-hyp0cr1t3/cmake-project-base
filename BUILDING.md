@@ -20,7 +20,7 @@ Note that MSVC by default is not standards compliant and you need to pass some
 flags to make it behave properly. See the `flags-windows` preset in the
 [CMakePresets.json](CMakePresets.json) file for the flags and variables to provide to CMake during configuration.
 
-### Docs
+### Build Docs
 
 Pass `BUILD_MCSS_DOCS` to CMake to build docs.
 ```sh
@@ -35,17 +35,17 @@ cmake --build build --target docs
 
 Open `build/docs/html/index.html` to view them.
 
-### Tests
+### For developers
 
-Pass `BUILD_TESTING` and/or `ENABLE_COVERAGE` to enable tests and code coverage analysis respectively.
-```sh
-cmake -S . -B build -D BUILD_TESTING=YES -D ENABLE_COVERAGE=YES
-cmake --build build
-```
+Use `MyProj_DEVELOPER_MODE` to turn on `BUILD_MCSS_DOCS`, `BUILD_TESTING` and `ENABLE_COVERAGE`; or specify those that that you need separately.
 
 To run tests:
 ```sh
 cmake --build build --target test
+
+# or
+cd build
+ctest -j 4
 ```
 
 To run coverage:
@@ -54,12 +54,6 @@ cmake --build build --target ccov
 ```
 
 Open `build/ccov/.../index.html` to view the html report.
-
-The `MyProj_DEVELOPER_MODE` variable turns on `BUILD_MCSS_DOCS`, `BUILD_TESTING` and `ENABLE_COVERAGE`. So the following may also suffice:
-```sh
-cmake -S . -B build -D MyProj_DEVELOPER_MODE=ON
-cmake --build build
-```
 
 ## Install
 
@@ -77,6 +71,8 @@ To install to a location other than the standard one:
 ```sh
 cmake --install build --prefix "/foo/bar/baz"
 ```
+
+Note that if `BUILD_MCSS_DOCS` is true, docs have to be built first so they can be installed.
 
 To uninstall:
 ```sh

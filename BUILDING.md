@@ -37,7 +37,7 @@ Open `build/docs/html/index.html` to view them.
 
 ### For developers
 
-Use `MyProj_DEVELOPER_MODE` to turn on `BUILD_MCSS_DOCS`, `BUILD_TESTING` and `ENABLE_COVERAGE`; or specify those that that you need separately.
+Use `MyProj_DEVELOPER_MODE` to turn on `BUILD_MCSS_DOCS`, `BUILD_TESTING` and `ENABLE_COVERAGE`; or specify those that you need separately.
 
 To run tests:
 ```sh

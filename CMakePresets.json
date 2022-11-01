@@ -72,20 +72,12 @@
       }
     },
     {
-      "name": "clang-tidy",
-      "hidden": true,
-      "cacheVariables": {
-        "MyProj_USE_CLANG_TIDY": "ON",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
-      }
-    },
-    {
       "name": "ci-windows",
       "inherits": ["ci-build", "ci-win64", "dev-mode"]
     },
     {
       "name": "ci-ubuntu",
-      "inherits": ["ci-build", "ci-unix", "clang-tidy", "dev-mode"]
+      "inherits": ["ci-build", "ci-unix", "dev-mode"]
     }
   ]
 }

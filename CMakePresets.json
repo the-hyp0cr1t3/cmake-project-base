@@ -15,7 +15,7 @@
       "name": "flags-unix",
       "hidden": true,
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Wcast-qual -Wold-style-cast -Wsuggest-override -Wshadow -Wformat=2 -Wundef -Werror=float-equal"
+        "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Wcast-qual -Wold-style-cast -Wsuggest-override -Wshadow -Wformat=2 -Werror=float-equal"
       }
     },
     {

@@ -14,7 +14,7 @@
 # the License.
 
 # USAGE: To enable any code coverage instrumentation/targets, the single CMake
-# option of `ENABLE_COVERAGE` needs to be set to 'ON', either by GUI, ccmake, or
+# option of `COVERAGE_ENABLED` needs to be set to 'ON', either by GUI, ccmake, or
 # on the command line.
 #
 # From this point, there are two primary methods for adding instrumentation to
@@ -73,11 +73,7 @@
 # target_code_coverage(theExe AUTO ALL EXCLUDE non_covered.cpp test/*) # As an executable target, adds to the 'ccov' and ccov-all' targets, and the reports will exclude the non-covered.cpp file, and any files in a test/ folder.
 # ~~~
 
-# Options
-option(
-  ENABLE_COVERAGE
-  "Builds targets with code coverage instrumentation. (Requires GCC or Clang)"
-  OFF)
+set(COVERAGE_ENABLED ${MyProj_ENABLE_COVERAGE})
 
 # Programs
 find_program(LLVM_COV_PATH llvm-cov)
@@ -92,7 +88,7 @@ set(CMAKE_COVERAGE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/ccov)
 set_property(GLOBAL PROPERTY JOB_POOLS ccov_serial_pool=1)
 
 # Common initialization/checks
-if(ENABLE_COVERAGE AND NOT CODE_COVERAGE_ADDED)
+if(COVERAGE_ENABLED AND NOT CODE_COVERAGE_ADDED)
   set(CODE_COVERAGE_ADDED ON)
 
   # Common Targets
@@ -247,7 +243,7 @@ function(target_code_coverage TARGET_NAME)
     set(target_code_coverage_COVERAGE_TARGET_NAME ${TARGET_NAME})
   endif()
 
-  if(ENABLE_COVERAGE)
+  if(COVERAGE_ENABLED)
 
     # Add code coverage instrumentation to the target's linker command
     if(CMAKE_C_COMPILER_ID MATCHES "(Apple)?[Cc]lang"
@@ -497,7 +493,7 @@ endfunction()
 # any subdirectories. To add coverage instrumentation to only specific targets,
 # use `target_code_coverage`.
 function(add_code_coverage)
-  if(ENABLE_COVERAGE)
+  if(COVERAGE_ENABLED)
     if(CMAKE_C_COMPILER_ID MATCHES "(Apple)?[Cc]lang"
        OR CMAKE_CXX_COMPILER_ID MATCHES "(Apple)?[Cc]lang")
       add_compile_options(-fprofile-instr-generate -fcoverage-mapping)
@@ -525,7 +521,7 @@ function(add_code_coverage_all_targets)
   cmake_parse_arguments(add_code_coverage_all_targets "" ""
                         "${multi_value_keywords}" ${ARGN})
 
-  if(ENABLE_COVERAGE)
+  if(COVERAGE_ENABLED)
     if(CMAKE_C_COMPILER_ID MATCHES "(Apple)?[Cc]lang"
        OR CMAKE_CXX_COMPILER_ID MATCHES "(Apple)?[Cc]lang")
 

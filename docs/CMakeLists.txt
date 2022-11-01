@@ -1,5 +1,13 @@
 find_package(Python3 3.6 REQUIRED)
 
+FetchContent_Declare(
+  mcss
+  GIT_REPOSITORY https://github.com/friendlyanon/m.css.git
+  GIT_TAG 7ae8c129ef6ad569090f75e67787c62ee6a9fb67)  # release-1
+
+FetchContent_MakeAvailable(mcss)
+
+
 set(DOXYGEN_OUTPUT_DIRECTORY
     ${CMAKE_CURRENT_BINARY_DIR}
     CACHE PATH "Path for the generated Doxygen documentation")

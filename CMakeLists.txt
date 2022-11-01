@@ -23,41 +23,15 @@ if(PROJECT_IS_TOP_LEVEL)
 endif()
 
 include(FetchContent)
-include(link-time-optimization)
-include(basic-package-install)
-include(support-RPATH)
-include(uninstall-rules)
+include(LinkTimeOptimization)
+include(CodeCoverage)
+include(SupportRPATH)
+include(InstallBasicPackageFiles)
+include(AddUninstallTarget)
 
 if(MyProj_DEVELOPER_MODE)
-  include(lint-targets)
-  include(clang-tidy)
-endif()
-
-
-#---------------------------
-# Depencencies
-#---------------------------
-
-if(MyProj_BUILD_DOCS)
-  FetchContent_Declare(
-    mcss
-    GIT_REPOSITORY https://github.com/friendlyanon/m.css.git
-    GIT_TAG 7ae8c129ef6ad569090f75e67787c62ee6a9fb67)  # release-1
-
-  FetchContent_MakeAvailable(mcss)
-
-endif()
-
-if(MyProj_BUILD_TESTING)
-  FetchContent_Declare(
-    googletest
-    SYSTEM
-    GIT_REPOSITORY https://github.com/google/googletest.git
-    GIT_TAG 58d77fa8070e8cec2dc1ed015d66b454c8d78850  # release-1.12.1
-    FIND_PACKAGE_ARGS NAMES GTest)
-
-  FetchContent_MakeAvailable(googletest)
-
+  include(ClangFormat)
+  include(ClangTidy)
 endif()
 
 
@@ -125,6 +99,7 @@ if(PROJECT_IS_TOP_LEVEL)
 
 endif()
 
+
 #---------------------------
 # Sources
 #---------------------------
@@ -140,19 +115,18 @@ if(MyProj_BUILD_TESTING)
 endif()
 
 #---------------------------
+# Examples
+#---------------------------
+
+add_subdirectory(examples)
+
+#---------------------------
 # Documentation
 #---------------------------
 
 if(MyProj_BUILD_DOCS)
   add_subdirectory(docs)
 endif()
-
-
-#---------------------------
-# Examples
-#---------------------------
-
-add_subdirectory(examples)
 
 
 #---------------------------
@@ -185,116 +159,35 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
       PATTERN "*.hxx"
   )
 
-  add_subdirectory(packaging)
-
 endif()
 
 
+#---------------------------
+# Packaging
+#---------------------------
+
+set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
+set(CPACK_PACKAGE_VENDOR "the-hyp0cr1t3")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY ${PROJECT_DESCRIPTION})
+set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
+
+set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+
+if(WIN32)
+  set(CPACK_GENERATOR ZIP WIX)
+elseif(APPLE)
+  set(CPACK_GENERATOR TGZ productbuild)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  set(CPACK_GENERATOR TGZ RPM)
+else()
+  set(CPACK_GENERATOR TGZ)
+endif()
+
+set(CPACK_VERBATIM_VARIABLES YES)
+set(CPACK_SOURCE_IGNORE_FILES /\\.git.* /\\.git/ /\\.github/ /build/)
 
 if(PROJECT_IS_TOP_LEVEL)
-  option(MyProj_DEVELOPER_MODE "Enable developer mode" OFF)
-  include(GNUInstallDirs)
-endif()
-
-option(BUILD_TESTING "Create tests using CMake" ${MyProj_DEVELOPER_MODE})
-option(BUILD_MCSS_DOCS "Build documentation using Doxygen and m.css" ${MyProj_DEVELOPER_MODE})
-option(BUILD_SHARED_LIBS "Build libraries as shared as opposed to static" OFF)
-option(
-  ENABLE_COVERAGE
-  "Build targets with code coverage instrumentation (requires GCC or Clang)"
-  ${MyProj_DEVELOPER_MODE})
-
-
-
-
-if(MyProj_DEVELOPER_MODE)
-  include(clang-tidy)
-endif()
-
-include(link-time-optimization)
-
-# Encourage users to specify a build type; otherwise set it to Release.
-if(NOT CMAKE_CONFIGURATION_TYPES)
-  if(NOT CMAKE_BUILD_TYPE)
-    message(STATUS "Setting build type to 'Release' as none were specified.")
-    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY VALUE "Release")
-  endif()
-endif()
-
-# Avoid config naming clashes in the installation directories
-if(MSVC)
-  set(CMAKE_DEBUG_POSTFIX "d")
-endif()
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_STANDARD_REQUIRED YES)
-
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3")
-
-# Build position independent code
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
-# Required on Windows to build shared libraries in Windows
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-
-# Fetch externally provided content
-include(deps)
-
-# Turn on test related commands; otherwise disable all of them.
-if(BUILD_TESTING)
-  enable_testing()
-endif()
-
-# Build project targets
-add_subdirectory(src)
-
-# Build project targets
-add_subdirectory(examples)
-
-# Add install and uninstall targets
-if(NOT CMAKE_SKIP_INSTALL_RULES)
-  include(install-targets)
-  include(uninstall-targets)
-endif()
-
-
-if(MyProj_DEVELOPER_MODE)
-  # Add targets format-check and format-fix for developers
-  include(lint-targets)
-
-  # include(clang-tidy)
-endif()
-
-
-if(PROJECT_IS_TOP_LEVEL)
-  # Place all executables in build/bin/
-  if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
-        ${CMAKE_CURRENT_BINARY_DIR}/bin)
-  endif()
-
-  # Place all shared libs in build/lib/
-  if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
-    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY
-        ${CMAKE_CURRENT_BINARY_DIR}/lib)
-  endif()
-
-  # Place all static libs in build/lib/
-  if(NOT CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
-    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY
-        ${CMAKE_CURRENT_BINARY_DIR}/lib)
-  endif()
-
-  if(BUILD_TESTING)
-    include(CTest)
-    add_subdirectory(tests)
-  endif()
-
-  if(BUILD_MCSS_DOCS)
-    add_subdirectory(docs)
-  endif()
-
-  add_subdirectory(packaging)
+  include(CPack)
 endif()

@@ -22,9 +22,9 @@ flags to make it behave properly. See the `flags-windows` preset in the
 
 ### Build Docs
 
-Pass `BUILD_MCSS_DOCS` to CMake to build docs.
+Pass `MyProj_BUILD_DOCS` to CMake to build docs.
 ```sh
-cmake -S . -B build -D BUILD_MCSS_DOCS=YES
+cmake -S . -B build -D MyProj_BUILD_DOCS=YES
 cmake --build build
 ```
 
@@ -37,7 +37,7 @@ Open `build/docs/html/index.html` to view them.
 
 ### For developers
 
-Use `MyProj_DEVELOPER_MODE` to turn on `BUILD_MCSS_DOCS`, `BUILD_TESTING` and `ENABLE_COVERAGE`; or specify those that you need separately.
+Use `MyProj_DEVELOPER_MODE` to turn on `MyProj_BUILD_DOCS`, `MyProj_BUILD_TESTING` and `MyProj_ENABLE_COVERAGE`; or specify those that you need separately.
 
 To run tests:
 ```sh
@@ -72,7 +72,7 @@ To install to a location other than the standard one:
 cmake --install build --prefix "/foo/bar/baz"
 ```
 
-Note that if `BUILD_MCSS_DOCS` is true, docs have to be built first so they can be installed.
+Note that if `MyProj_BUILD_DOCS` is true, docs have to be built first so they can be installed.
 
 To uninstall:
 ```sh

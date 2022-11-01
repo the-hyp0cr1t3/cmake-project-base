@@ -1,4 +1,5 @@
 include(CMakeDependentOption)
+include(CMakePrintHelpers)
 
 if(PROJECT_IS_TOP_LEVEL)
 
@@ -29,5 +30,13 @@ if(PROJECT_IS_TOP_LEVEL)
     MyProj_ENABLE_COVERAGE
     "Build targets with code coverage instrumentation (requires GCC or Clang)" ON
     "MyProj_DEVELOPER_MODE;MyProj_BUILD_TESTING" OFF)
+
+  message(STATUS "Project options:")
+  cmake_print_variables(
+    MyProj_DEVELOPER_MODE
+    MyProj_BUILD_DOCS
+    MyProj_USE_CLANG_TIDY
+    MyProj_BUILD_TESTING
+    MyProj_ENABLE_COVERAGE)
 
 endif()

@@ -1,4 +1,4 @@
-#include <MyLib/MyLib.h>
+#include <MyLib/mylib.h>
 
 #include <iostream>
 

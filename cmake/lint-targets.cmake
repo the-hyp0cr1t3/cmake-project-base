@@ -1,6 +1,6 @@
 set(patterns "")
 
-foreach(dir IN ITEMS src include tests)
+foreach(dir IN ITEMS src include tests examples)
   list(APPEND patterns
     ${dir}/*.cpp
     ${dir}/*.cxx

@@ -118,7 +118,9 @@ endif()
 # Examples
 #---------------------------
 
+if(MyProj_BUILD_EXAMPLES)
 add_subdirectory(examples)
+endif()
 
 #---------------------------
 # Documentation

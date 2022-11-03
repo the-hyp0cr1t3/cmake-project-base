@@ -37,10 +37,6 @@ cmake -S . -B build -D MyProj_BUILD_DOCS=OFF -D MyProj_BUILD_TESTING=ON
 
 </details>
 
-### For developers
-
-Use `MyProj_DEVELOPER_MODE` to turn on `MyProj_BUILD_DOCS`, `MyProj_BUILD_TESTING` and `MyProj_ENABLE_COVERAGE`; or specify those that you need separately.
-
 ## Test
 
 `MyProj_BUILD_TESTING` must be set to `ON` to build tests. Additionally, `MyProj_ENABLE_COVERAGE` can be turned on to enable coverage analysis using either [gcov](https://en.wikipedia.org/wiki/Gcov) or [lcov](https://wiki.documentfoundation.org/Development/Lcov).

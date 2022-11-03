@@ -17,12 +17,28 @@ git clone git@github.com:the-hyp0cr1t3/cmake-project-base.git
 cd cmake-project-base
 
 # Build
+mkdir build
+cd build
+cmake ..
+make
+
+# Install
+sudo make install
+```
+
+<details>
+    <summary>Platform agnostic</summary>
+
+```bash
+# Build
 cmake -S . -B build
 cmake --build build
 
 # Install
 sudo cmake --install build
 ```
+
+</details>
 
 ## Usage
 

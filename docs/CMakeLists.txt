@@ -21,7 +21,7 @@ set(config "${CMAKE_CURRENT_BINARY_DIR}/conf.py")
 set(mcss_script "${mcss_SOURCE_DIR}/documentation/doxygen.py")
 
 add_custom_target(
-  docs
+  docs ALL
   COMMAND "${CMAKE_COMMAND}" -E remove_directory
           "${DOXYGEN_OUTPUT_DIRECTORY}/html" "${DOXYGEN_OUTPUT_DIRECTORY}/xml"
   COMMAND "${Python3_EXECUTABLE}" "${mcss_script}" "${config}"

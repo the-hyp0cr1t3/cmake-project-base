@@ -20,40 +20,41 @@ Note that MSVC by default is not standards compliant and you need to pass some
 flags to make it behave properly. See the `flags-windows` preset in the
 [CMakePresets.json](CMakePresets.json) file for the flags and variables to provide to CMake during configuration.
 
-### Build Docs
+### Build Options
 
-Pass `MyProj_BUILD_DOCS` to CMake to build docs.
-```sh
-cmake -S . -B build -D MyProj_BUILD_DOCS=YES
-cmake --build build
+The following options can be passed to cmake for finer control.
+
+* `MyProj_BUILD_DOCS` (default: `ON`): Builds documentation. Open `build/docs/html/index.html` to view them.
+* `MyProj_BUILD_EXAMPLES` (default: `ON`): Builds example programs in `examples/`.
+* `MyProj_BUILD_TESTING` (default: `OFF`): Builds tests.
+
+<details>
+    <summary>Example</summary>
+
+```bash
+cmake -S . -B build -D MyProj_BUILD_DOCS=OFF -D MyProj_BUILD_TESTING=ON
 ```
 
-After building the project, generate docs by running:
-```sh
-cmake --build build --target docs
-```
-
-Open `build/docs/html/index.html` to view them.
+</details>
 
 ### For developers
 
 Use `MyProj_DEVELOPER_MODE` to turn on `MyProj_BUILD_DOCS`, `MyProj_BUILD_TESTING` and `MyProj_ENABLE_COVERAGE`; or specify those that you need separately.
 
-To run tests:
-```sh
-cmake --build build --target test
+## Test
 
-# or
+`MyProj_BUILD_TESTING` must be set to `ON` to build tests. Additionally, `MyProj_ENABLE_COVERAGE` can be turned on to enable coverage analysis using either [gcov](https://en.wikipedia.org/wiki/Gcov) or [lcov](https://wiki.documentfoundation.org/Development/Lcov).
+
+```sh
 cd build
-ctest -j 4
+
+# run tests
+ctest -j4
+
+# coverage
+make ccov  # open `build/ccov/.../index.html` to view the html report
 ```
 
-To run coverage:
-```sh
-cmake --build build --target ccov
-```
-
-Open `build/ccov/.../index.html` to view the html report.
 
 ## Install
 
@@ -71,8 +72,6 @@ To install to a location other than the standard one:
 ```sh
 cmake --install build --prefix "/foo/bar/baz"
 ```
-
-Note that if `MyProj_BUILD_DOCS` is true, docs have to be built first so they can be installed.
 
 To uninstall:
 ```sh

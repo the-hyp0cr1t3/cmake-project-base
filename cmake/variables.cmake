@@ -18,7 +18,7 @@ if(PROJECT_IS_TOP_LEVEL)
 
   cmake_dependent_option(
     ${PROJECT_NAME}_ENABLE_COVERAGE
-    "Build targets with code coverage instrumentation (requires GCC or Clang)" ON
+    "Build targets with code coverage instrumentation (requires GCC or Clang)" OFF
     "${PROJECT_NAME}_BUILD_TESTING" ${${PROJECT_NAME}_DEVELOPER_MODE})
 
   cmake_dependent_option(

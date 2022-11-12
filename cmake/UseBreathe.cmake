@@ -1,18 +1,10 @@
 find_package(Doxygen REQUIRED)
-message(STATUS "Found Doxygen: " ${DOXYGEN_EXECUTABLE})
-
 find_package(Perl REQUIRED)
-message(STATUS "Found Perl: " ${PERL_EXECUTABLE})
-
 find_package(Python REQUIRED)
-message(STATUS "Found Python: " ${Python_EXECUTABLE})
-
 find_package(Sphinx REQUIRED)
-message(STATUS "Found Sphinx: " ${SPHINX_EXECUTABLE})
 
 include(FindPythonModule)
 find_python_module(breathe REQUIRED)
-message(STATUS "Found Breathe: " ${breathe})
 
 function(add_breathe_doc)
   set(options)

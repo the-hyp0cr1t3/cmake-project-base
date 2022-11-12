@@ -97,12 +97,19 @@ endif()
 # Dependencies
 #---------------------------
 
+# add_subdirectory(extern)
 
 #---------------------------
 # Sources
 #---------------------------
 
 add_subdirectory(src)
+
+#---------------------------
+# Tests
+#---------------------------
+
+add_subdirectory(tests)
 
 #---------------------------
 # Examples

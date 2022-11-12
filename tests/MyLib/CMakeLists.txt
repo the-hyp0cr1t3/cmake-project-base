@@ -3,7 +3,7 @@ include(GoogleTest)
 add_executable(MyProj_mylib_test mylib.test.cc)
 
 target_link_libraries(MyProj_mylib_test
-  PRIVATE MyProj::mylib GTest::gtest GTest::gmock GTest::gtest_main)
+  PRIVATE MyProj::mylib GTest::gtest GTest::gtest_main)
 
 gtest_discover_tests(MyProj_mylib_test
   TEST_PREFIX MyProj.

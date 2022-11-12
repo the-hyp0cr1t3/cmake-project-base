@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 project(
   MyProj
-  VERSION 1.0.0
+  VERSION 2.0.0
   DESCRIPTION ""
   HOMEPAGE_URL "https://github.com/the-hyp0cr1t3/cmake-project-base"
   LANGUAGES CXX C)

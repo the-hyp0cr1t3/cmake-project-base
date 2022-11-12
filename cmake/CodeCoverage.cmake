@@ -73,7 +73,7 @@
 # target_code_coverage(theExe AUTO ALL EXCLUDE non_covered.cpp test/*) # As an executable target, adds to the 'ccov' and ccov-all' targets, and the reports will exclude the non-covered.cpp file, and any files in a test/ folder.
 # ~~~
 
-set(COVERAGE_ENABLED ${MyProj_ENABLE_COVERAGE})
+set(COVERAGE_ENABLED ${${PROJECT_NAME}_ENABLE_COVERAGE})
 
 # Programs
 find_program(LLVM_COV_PATH llvm-cov)

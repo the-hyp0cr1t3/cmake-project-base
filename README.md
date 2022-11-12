@@ -1,13 +1,6 @@
 # CMake Project template
 This is an example C++ project setup using [CMake](https://cmake.org/).
 
-## Highlights
-* Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* Ut volutpat odio nec justo euismod euismod.
-* Morbi sed ligula vitae nibh laoreet sodales ut a mauris.
-* Cras ut ligula condimentum, elementum justo vel, condimentum diam.
-* Proin eget felis sit amet arcu dictum sodales.
-
 ## Build Instructions
 
 Build using CMake. For more details, see [BUILDING.md](BUILDING.md).
@@ -26,19 +19,6 @@ make
 sudo make install
 ```
 
-<details>
-    <summary>Platform agnostic</summary>
-
-```bash
-# Build
-cmake -S . -B build
-cmake --build build
-
-# Install
-sudo cmake --install build
-```
-
-</details>
 
 ## Usage
 

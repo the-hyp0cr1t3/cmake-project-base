@@ -7,7 +7,7 @@
   },
   "configurePresets": [
     {
-      "name": "ci-build",
+      "name": "build",
       "hidden": true,
       "binaryDir": "${sourceDir}/build"
     },
@@ -27,13 +27,13 @@
       }
     },
     {
-      "name": "ci-unix",
+      "name": "unix",
       "hidden": true,
       "inherits": ["flags-unix" ],
       "generator": "Unix Makefiles"
     },
     {
-      "name": "ci-win64",
+      "name": "win64",
       "hidden": true,
       "inherits": ["flags-windows" ],
       "generator": "Visual Studio 17 2022",
@@ -63,21 +63,21 @@
       }
     },
     {
-      "name": "ci-sanitize",
+      "name": "sanitize",
       "binaryDir": "${sourceDir}/build/sanitize",
-      "inherits": ["ci-unix", "dev-mode"],
+      "inherits": ["unix", "dev-mode"],
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Sanitize",
         "CMAKE_CXX_FLAGS_SANITIZE": "-O2 -g -fsanitize=address,undefined -fno-omit-frame-pointer -fno-common"
       }
     },
     {
-      "name": "ci-windows",
-      "inherits": ["ci-build", "ci-win64", "dev-mode"]
+      "name": "windows",
+      "inherits": ["build", "win64", "dev-mode"]
     },
     {
-      "name": "ci-ubuntu",
-      "inherits": ["ci-build", "ci-unix", "dev-mode"]
+      "name": "linux",
+      "inherits": ["build", "unix", "dev-mode"]
     }
   ]
 }

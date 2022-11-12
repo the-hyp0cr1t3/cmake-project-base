@@ -1,5 +1,7 @@
 # Building with CMake
 
+This project requires [CMake](https://cmake.org/).
+
 ## Build
 
 To build in release mode with a single-configuration generator (eg. Unix Makefiles):
@@ -20,7 +22,7 @@ Note that MSVC by default is not standards compliant and you need to pass some
 flags to make it behave properly. See the `flags-windows` preset in the
 [CMakePresets.json](CMakePresets.json) file for the flags and variables to provide to CMake during configuration.
 
-### Build Options
+### Build options
 
 The following options can be passed to cmake for finer control.
 
@@ -36,6 +38,20 @@ cmake -S . -B build -D MyProj_BUILD_DOCS=OFF -D MyProj_BUILD_TESTING=ON
 ```
 
 </details>
+
+### Build docs
+
+Build documentation with [Doxygen](https://doxygen.nl/) + [Sphinx](https://www.sphinx-doc.org/en/master/) + [Breathe](https://breathe.readthedocs.io/en/latest/).
+
+Install dependencies:
+```sh
+pip install -r docs/requirements.txt
+```
+
+Build the docs:
+```sh
+cmake --build build --target docs
+```
 
 ## Test
 

@@ -1,5 +1,13 @@
 include(CMakeDependentOption)
 
+if(CMAKE_VERSION VERSION_LESS 3.21)
+  string(
+    COMPARE EQUAL
+    "${CMAKE_SOURCE_DIR}" "${PROJECT_SOURCE_DIR}"
+    PROJECT_IS_TOP_LEVEL
+  )
+endif()
+
 option(BUILD_SHARED_LIBS "Build libraries as shared as opposed to static" OFF)
 
 # Developer mode enables targets and code paths in the CMake scripts that are
